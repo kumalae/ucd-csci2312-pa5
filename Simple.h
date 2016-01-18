@@ -23,7 +23,6 @@ namespace Gaming {
         void print(std::ostream &os) const override;
 
         ActionType takeTurn(const Surroundings &s) const override;
-
     };
 }
 
