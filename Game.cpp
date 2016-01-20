@@ -2,6 +2,8 @@
 // Created by User on 12/10/15.
 //
 
+#include <random>
+
 #include "Game.h"
 #include "Exceptions.h"
 
@@ -44,7 +46,10 @@ namespace Gaming {
             __grid[i] = nullptr;
     }
 
-    Game::~Game() : __status(OVER), __verbose(false) {
+    Game::~Game() {
+        __status = OVER;
+        __verbose = false;
+
         for (int i=0; i<getNumPieces(); i++)
             __grid[i] = nullptr;
 
@@ -52,5 +57,19 @@ namespace Gaming {
     }
 
     void Game::populate() {
+        unsigned size = __width * __height;
+        unsigned strategic, simple, advantage, food;
+        std::default_random_engine generator;
+        std::uniform_int_distribution<int> distribution(0, size);
+        auto random = std::bind(distribution, generator);
+
+        __numInitAgents = size / NUM_INIT_AGENT_FACTOR;
+        __numInitResources = size / NUM_INIT_RESOURCE_FACTOR;
+
+        strategic = simple = __numInitAgents / 2;
+        advantage = __numInitResources / 6;
+        food = 5 * __numInitResources / 6;
+
+
     }
 }
